@@ -82,8 +82,8 @@ const { MongoClient } = require("mongodb");
 
 const app = express();
 const PORT = process.env.PORT || 5095;
-const MONGO_URI =
-	"mongodb+srv://mostafaqaraman:Gpjoyp2NreEEfxXY@react-blog.4xv45xr.mongodb.net/?retryWrites=true&w=majority&appName=React-Blog";
+const MONGO_URI = process.env.MONGO_URI;
+// "mongodb+srv://mostafaqaraman:Gpjoyp2NreEEfxXY@react-blog.4xv45xr.mongodb.net/?retryWrites=true&w=majority&appName=React-Blog";
 
 console.log("Mongo URI:", MONGO_URI);
 
