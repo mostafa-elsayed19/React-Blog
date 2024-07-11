@@ -76,6 +76,8 @@
 // 	console.log(`server started at port ${PORT}`);
 // });
 
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
