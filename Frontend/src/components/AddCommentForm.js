@@ -1,11 +1,13 @@
 import { useState } from "react";
 
+const BASE_URL = "https://react-blog-ujg2.vercel.app/api";
+
 function AddCommentForm({ articleName, setArticleInfo }) {
 	const [username, setUsername] = useState("");
 	const [commentText, setCommentText] = useState("");
 	async function addComments() {
 		const result = await fetch(
-			`/api/articles/${articleName}/add-comments`,
+			`${BASE_URL}/articles/${articleName}/add-comments`,
 			{
 				method: "POST",
 				body: JSON.stringify({ username, text: commentText }),

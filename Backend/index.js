@@ -153,11 +153,13 @@ app.post("/api/articles/:name/add-comments", async (req, res) => {
 			.collection("articles")
 			.findOne({ name: articleName });
 
+		const comments = article.comments || [];
+
 		await db.collection("articles").updateOne(
 			{ name: articleName },
 			{
 				$set: {
-					comments: article.comments.concat({ username, text }),
+					comments: comments.concat({ username, text }),
 				},
 			}
 		);

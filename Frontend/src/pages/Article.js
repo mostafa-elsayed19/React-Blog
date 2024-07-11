@@ -1,29 +1,28 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import articleContent from "./article-content";
+// import articleContent from "./article-content";
 import Articles from "../components/Articles";
 import NotFound from "./NotFound";
 import Comments from "../components/Comments";
 import AddCommentForm from "../components/AddCommentForm";
-function Article() {
+
+const BASE_URL = "https://react-blog-ujg2.vercel.app/api";
+function Article({ articles }) {
 	const { name } = useParams();
-	const article = articleContent.find((article) => article.name === name);
+	const article = articles.find((article) => article.name === name);
 	const [articleInfo, setArticleInfo] = useState({ comments: [] });
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const result = await fetch(`/api/articles/${name}`);
+			const result = await fetch(`${BASE_URL}/articles/${name}`);
 			const body = await result.json();
-			console.log(body);
 			setArticleInfo(body);
 		};
 		fetchData();
-	}, [name]);
+	}, [name, setArticleInfo]);
 	if (!article) return <NotFound />;
 
-	const OTHER_ARTICLES = articleContent.filter(
-		(article) => article.name !== name
-	);
+	const OTHER_ARTICLES = articles.filter((article) => article.name !== name);
 	return (
 		<>
 			<h1 className="sm:text-4xl text-2xl font-bold my-6 text-gray-90">

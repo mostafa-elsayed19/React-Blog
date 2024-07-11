@@ -1,7 +1,11 @@
 function Comments({ comments }) {
+	// if (!comments || comments.length === 0) {
+	// 	return <div>No comments yet.</div>;
+	// }
+
 	return (
 		<>
-			{comments.length > 0 && (
+			{comments?.length > 0 && (
 				<>
 					<h3 className="sm:text-2xl text-xl font-bold my-6 text-gray-900">
 						Comments
