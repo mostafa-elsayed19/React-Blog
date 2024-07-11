@@ -9,6 +9,12 @@ const MONGO_URI = process.env.MONGO_URI;
 
 app.use(express.json({ extended: false }));
 
+app.use(
+	cors({
+		origin: "*",
+	})
+);
+
 const withDB = async (operations, res) => {
 	try {
 		const client = await MongoClient.connect(MONGO_URI, {
@@ -24,6 +30,13 @@ const withDB = async (operations, res) => {
 };
 
 // Requests
+app.get("/api/articles", async (req, res) => {
+	withDB(async (db) => {
+		const articles = await db.collection("articles").find({}).toArray();
+		res.status(200).json(articles);
+	}, res);
+});
+
 app.get("/api/articles/:name", async (req, res) => {
 	withDB(async (db) => {
 		const articleName = req.params.name;

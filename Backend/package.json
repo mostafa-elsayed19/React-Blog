@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"main": "server.js",
 	"scripts": {
-		"server": "nodemon server",
+		"server": "nodemon index",
 		"client": "npm start --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\""
 	},
