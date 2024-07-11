@@ -1,7 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const { MongoClient } = require("mongodb");
 const PORT = process.env.PORT || 5095;
+const MONGO_URI = process.env.MONGO_URI;
 
 // Initialize middlewares
 
@@ -9,7 +11,10 @@ app.use(express.json({ extended: false }));
 
 const withDB = async (operations, res) => {
 	try {
-		const client = await MongoClient.connect("mongodb://localhost:27017");
+		const client = await MongoClient.connect(MONGO_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		});
 		const db = client.db("blog");
 		await operations(db);
 		client.close();
