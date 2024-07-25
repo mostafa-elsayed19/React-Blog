@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useArticles } from "../context/ArticleContext";
 
 const BASE_URL = "https://react-blog-ujg2.vercel.app/api";
 
-function AddCommentForm({ articleName, setArticleInfo }) {
+function AddCommentForm({ articleName }) {
+	const { getComments } = useArticles();
 	const [username, setUsername] = useState("");
 	const [commentText, setCommentText] = useState("");
 	async function addComments() {
@@ -14,13 +16,20 @@ function AddCommentForm({ articleName, setArticleInfo }) {
 				headers: { "Content-Type": "application/json" },
 			}
 		);
-		const body = await result.json();
-		setArticleInfo(body);
+		await result.json();
 		setUsername("");
 		setCommentText("");
+
+		getComments(articleName);
 	}
 	return (
-		<form className="shadow rounded px-8 pt-6 pb-8 mb-4">
+		<form
+			className="shadow rounded px-8 pt-6 pb-8 mb-4"
+			onSubmit={(e) => {
+				e.preventDefault();
+				addComments();
+			}}
+		>
 			<h3 className="text-xl font-bold mb-4 text-gray-900">
 				Add a comment
 			</h3>
@@ -49,10 +58,7 @@ function AddCommentForm({ articleName, setArticleInfo }) {
 				value={commentText}
 				onChange={(e) => setCommentText(e.target.value)}
 			></textarea>
-			<button
-				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-				onClick={() => addComments()}
-			>
+			<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
 				Add Comment
 			</button>
 		</form>
